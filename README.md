@@ -11,6 +11,5 @@
 ![img data](images/form%20data.png)
 ![img data](images/data%20warga.png)
 ![img data](images/edit%20data.png)
-![img data](images/edit%20data.png)
 ![img data](images/cetak%20daftar.png)
 ![img data](images/cetak%20kartu.png)
