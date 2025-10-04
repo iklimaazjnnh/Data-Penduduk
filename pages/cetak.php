@@ -47,5 +47,9 @@ include "../koneksi.php";
 		</tr>		
 		<?php $nomor++; } 
 		}?>		
+		
 	</table>
 </div>
+	<a href="cetak-pdf.php" target="_blank" class="download-btn">
+  		<i class="fa fa-file-pdf-o"></i> Download PDF
+	</a>
