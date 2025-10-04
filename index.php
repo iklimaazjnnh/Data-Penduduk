@@ -35,6 +35,11 @@ if(isset($_SESSION['sesi'])){
 				<li><a href="index.php?p=form-input">Form Data Warga</a></li>
 				<li><a href="index.php?p=warga">Data warga</a></li>
 			</ul>
+			<p class="label-navigasi">Layanan Surat</p>
+			<ul>
+  				<li><a href="index.php?p=form-surat">Buat Surat</a></li>
+  				<li><a href="index.php?p=surat">Data Surat</a></li>
+			</ul>
 			<p class="label-navigasi"></p>
 			<a href="logout.php">Logout</a>
 		</div>

@@ -1,14 +1,20 @@
 <div id="label-page"><h3>Tampil Data Penduduk</h3></div>
 <div id="content">
-	
 
-<a target="_blank" href="pages/cetak.php"><img src="print.png" height="50px" height="50px"></a>
-	<FORM CLASS="form-inline" METHOD="POST">
-	<div align="right"><form method=get><input type="text" name="pencarian"><input type="submit" name="search" value="search" class="tombol"></form>
-	</FORM>
+	<!-- Tombol Cetak -->
+	<a target="_blank" href="pages/cetak.php">
+		<img src="print.png" height="50px" width="50px">
+	</a>
+
+	<!-- Form Pencarian -->
+	<form class="form-inline" method="POST" style="text-align:right; margin:10px 0;">
+		<input type="text" name="pencarian" placeholder="Cari data warga..." value="<?php echo isset($_POST['pencarian']) ? $_POST['pencarian'] : ''; ?>" style="padding:5px; border-radius:5px; border:1px solid #ccc;">
+		<input type="submit" name="search" value="Search" class="tombol">
+	</form>
+
 	<table id="tabel-tampil">
 		<tr>
-			<th id="label-tampil-no">No</td>
+			<th id="label-tampil-no">No</th>
 			<th>NIK</th>
 			<th>Nama</th>
 			<th>Tanggal Lahir</th>
@@ -24,107 +30,98 @@
 
 		<?php
 		$batas = 5;
-		extract($_GET);
-		if(empty($hal)){
-			$posisi = 0;
-			$hal = 1;
-			$nomor = 1;
-		}
-		else {
-			$posisi = ($hal - 1) * $batas;
-			$nomor = $posisi+1;
-		}	
-		if($_SERVER['REQUEST_METHOD'] == "POST"){
-			$pencarian = trim(mysqli_real_escape_string($db, $_POST['pencarian']));
-			if($pencarian != ""){
-				$sql = "SELECT * FROM datawarga WHERE nik LIKE '%$pencarian%'
-						OR idwarga LIKE '%$pencarian%'
-						OR jeniskelamin LIKE '%$pencarian%'
-						OR alamat LIKE '%$pencarian%'";
-				
-				$query = $sql;
-				$queryJml = $sql;	
-						
-			}
-			else {
-				$query = "SELECT * FROM datawarga LIMIT $posisi, $batas";
-				$queryJml = "SELECT * FROM datawarga";
-				$no = $posisi * 1;
-			}			
-		}
-		else {
-			$query = "SELECT * FROM datawarga LIMIT $posisi, $batas";
-			$queryJml = "SELECT * FROM datawarga";
-			$no = $posisi * 1;
-		}
-		?>
-		
-		<?php
-	if(isset($_POST['pencarian'])){
-		if($_POST['pencarian']!=''){
-			echo "<div style=\"float:left;\">";
-			$jml = mysqli_num_rows(mysqli_query($db, $queryJml));
-			echo "Data Hasil Pencarian: <b>$jml</b>";
-			echo "</div>";
-		}
-	}
-	else{ ?>
-		<div style="float:left;">		
-		<?php
-			$jml = mysqli_num_rows(mysqli_query($db, $queryJml));
-			echo "Jumlah Data : <b>$jml</b>";
-		?>			
+		$hal = isset($_GET['hal']) ? $_GET['hal'] : 1;
+		$posisi = ($hal - 1) * $batas;
+		$nomor = $posisi + 1;
 
-	<?php
-	}
-	?>
-		<?php
-		//$sql="SELECT * FROM dtwarga ORDER BY idwarga DESC";
-		$q_tampil_warga = mysqli_query($db, $query);
-		if(mysqli_num_rows($q_tampil_warga)>0)
-		{
-		while($r_tampil_warga=mysqli_fetch_array($q_tampil_warga)){
-			if(empty($r_tampil_warga['foto'])or($r_tampil_warga['foto']=='-'))
-				$foto = "admin-no-photo.jpg";
-			else
-				$foto = $r_tampil_warga['foto'];
-		?>
-		<tr>
-			<td><?php echo $nomor; ?></td>
-			<td><?php echo $r_tampil_warga['idwarga']; ?></td>
-			<td><?php echo $r_tampil_warga['nama']; ?></td>
-			<td><?php echo $r_tampil_warga['tanggal']; ?></td>
-			<td><img src="images/<?php echo $foto; ?>" width=70px height=70px></td>
-			<td><?php echo $r_tampil_warga['jeniskelamin']; ?></td>
-			<td><?php echo $r_tampil_warga['alamat']; ?></td>
-			<td><?php echo $r_tampil_warga['agama']; ?></td>
-			<td><?php echo $r_tampil_warga['statu']; ?></td>
-			<td><?php echo $r_tampil_warga['kerja']; ?></td>
-			<td><?php echo $r_tampil_warga['warganegara']; ?></td>
-			<td>
-				<div class="tombol-opsi-container"><a target="_blank" href="pages/cetak-kartu.php?id=<?php echo $r_tampil_warga['idwarga'];?>" class="tombol">Cetak Kartu</a></div>
-				<div class="tombol-opsi-container"><a href="index.php?p=warga-edit&id=<?php echo $r_tampil_warga['idwarga'];?>" class="tombol">Edit</a></div>
-				<div class="tombol-opsi-container"><a href="proses/warga-hapus.php?id=<?php echo $r_tampil_warga['idwarga']; ?>" onclick = "return confirm ('Apakah Anda Yakin Akan Menghapus Data Ini?')" class="tombol">Hapus</a></div>
-			</td>			
-		</tr>		
-		<?php $nomor++; } 
+		// Cek apakah ada pencarian
+		if ($_SERVER['REQUEST_METHOD'] == "POST") {
+			$pencarian = trim(mysqli_real_escape_string($db, $_POST['pencarian']));
+			if ($pencarian != "") {
+				$sql = "SELECT * FROM datawarga 
+						WHERE idwarga LIKE '%$pencarian%' 
+						OR nama LIKE '%$pencarian%' 
+						OR jeniskelamin LIKE '%$pencarian%' 
+						OR alamat LIKE '%$pencarian%' 
+						OR agama LIKE '%$pencarian%' 
+						OR statu LIKE '%$pencarian%' 
+						OR kerja LIKE '%$pencarian%' 
+						OR warganegara LIKE '%$pencarian%'";
+			} else {
+				$sql = "SELECT * FROM datawarga LIMIT $posisi, $batas";
+			}
+		} else {
+			$sql = "SELECT * FROM datawarga LIMIT $posisi, $batas";
 		}
-		else {
-			echo "<tr><td colspan=6>Data Tidak Ditemukan</td></tr>";
-		}?>	
+
+		$query = mysqli_query($db, $sql);
+
+		if (!$query) {
+			echo "<tr><td colspan='12'>Terjadi kesalahan pada query: " . mysqli_error($db) . "</td></tr>";
+			exit;
+		}
+
+		// Tampilkan jumlah data
+		$totalQuery = mysqli_query($db, "SELECT * FROM datawarga");
+		$jml = mysqli_num_rows($totalQuery);
+
+		echo "<div style='float:left; margin-bottom:10px;'>";
+		if (!empty($pencarian)) {
+			echo "Data hasil pencarian: <b>" . mysqli_num_rows($query) . "</b>";
+		} else {
+			echo "Jumlah data: <b>$jml</b>";
+		}
+		echo "</div>";
+
+		if (mysqli_num_rows($query) > 0) {
+			while ($r_tampil_warga = mysqli_fetch_array($query)) {
+				$foto = (!empty($r_tampil_warga['foto']) && $r_tampil_warga['foto'] != '-') ? $r_tampil_warga['foto'] : "admin-no-photo.jpg";
+		?>
+				<tr>
+					<td><?php echo $nomor; ?></td>
+					<td><?php echo $r_tampil_warga['idwarga']; ?></td>
+					<td><?php echo $r_tampil_warga['nama']; ?></td>
+					<td><?php echo $r_tampil_warga['tanggal']; ?></td>
+					<td><img src="images/<?php echo $foto; ?>" width="70px" height="70px"></td>
+					<td><?php echo $r_tampil_warga['jeniskelamin']; ?></td>
+					<td><?php echo $r_tampil_warga['alamat']; ?></td>
+					<td><?php echo $r_tampil_warga['agama']; ?></td>
+					<td><?php echo $r_tampil_warga['statu']; ?></td>
+					<td><?php echo $r_tampil_warga['kerja']; ?></td>
+					<td><?php echo $r_tampil_warga['warganegara']; ?></td>
+					<td>
+						<div class="tombol-opsi-container">
+							<a target="_blank" href="pages/cetak-kartu.php?id=<?php echo $r_tampil_warga['idwarga']; ?>" class="tombol">Cetak Kartu</a>
+						</div>
+						<div class="tombol-opsi-container">
+							<a href="index.php?p=warga-edit&id=<?php echo $r_tampil_warga['idwarga']; ?>" class="tombol">Edit</a>
+						</div>
+						<div class="tombol-opsi-container">
+							<a href="proses/warga-hapus.php?id=<?php echo $r_tampil_warga['idwarga']; ?>" onclick="return confirm('Apakah Anda yakin akan menghapus data ini?')" class="tombol">Hapus</a>
+						</div>
+					</td>
+				</tr>
+		<?php
+				$nomor++;
+			}
+		} else {
+			echo "<tr><td colspan='12' style='text-align:center;'>Data tidak ditemukan</td></tr>";
+		}
+		?>
 	</table>
-	<div class="pagination" style="margin-bottom:40px;">		
-				<?php
-				$jml_hal = ceil($jml/$batas);
-				for($i=1; $i<=$jml_hal; $i++){
-					if($i != $hal){
-						echo "<a href=\"?p=warga&hal=$i\">$i</a>";
-					}
-					else {
-						echo "<a class=\"active\">$i</a>";
-					}
-				}
-				?>
-		</div>
+
+	<!-- PAGINATION -->
+	<div class="pagination" style="margin-bottom:40px; text-align:center;">
+		<?php
+		$jml_hal = ceil($jml / $batas);
+		for ($i = 1; $i <= $jml_hal; $i++) {
+			if ($i != $hal) {
+				echo "<a href='?p=warga&hal=$i'>$i</a>";
+			} else {
+				echo "<a class='active'>$i</a>";
+			}
+		}
+		?>
+	</div>
 </div>
 </div>
