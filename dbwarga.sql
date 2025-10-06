@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2022 at 09:11 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.28
+-- Waktu pembuatan: 06 Okt 2025 pada 05.52
+-- Versi server: 10.4.22-MariaDB
+-- Versi PHP: 7.4.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Struktur dari tabel `admin`
 --
 
 CREATE TABLE `admin` (
@@ -35,16 +35,17 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `admin`
+-- Dumping data untuk tabel `admin`
 --
 
 INSERT INTO `admin` (`idadmin`, `nm_admin`, `username`, `password`) VALUES
-(1, 'admin', 'admin', 'admin');
+(1, 'admin', 'admin', 'admin'),
+(2, 'iklima', 'iklima', 'iklima');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `datawarga`
+-- Struktur dari tabel `datawarga`
 --
 
 CREATE TABLE `datawarga` (
@@ -61,21 +62,80 @@ CREATE TABLE `datawarga` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `datawarga`
+-- Dumping data untuk tabel `datawarga`
 --
 
 INSERT INTO `datawarga` (`idwarga`, `nama`, `tanggal`, `jeniskelamin`, `alamat`, `agama`, `statu`, `kerja`, `warganegara`, `foto`) VALUES
-('3286026909020003', '2022-09-24', NULL, 'Wanita', 'jakarta', 'Islam', '', 'Idol', 'wni', '3286026909020003.jpg');
+('1234567890', 'Iklima Azizah Jannah', '2002-04-29', 'perempuan', 'Jatijajar, Depok', 'Islam', 'Belum Kawin', 'Mahasiswa', 'Indonesia', '1234567890.jpg'),
+('3276026206020001', 'Shani Indira', '2022-06-22', 'Perempuan', 'Depok', 'islam', 'Belum Kawin', 'Idol', 'WNI', '3276026206020001.jpg'),
+('3276026909020005', 'Harry Potter', '2022-02-11', 'laki-laki', 'Hogwarts', 'protestan', 'kawin', 'penyihir', 'WNA', '3276026909020005.jpg'),
+('3286026909020007', 'Harmione Granger', '2022-09-02', 'perempuan', 'Hogwarts', 'protestan', 'Belum Kawin', 'Penyihir Hogwarts', 'WNA', '3286026909020007.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `surat`
+--
+
+CREATE TABLE `surat` (
+  `id_surat` int(11) NOT NULL,
+  `idwarga` varchar(20) NOT NULL,
+  `jenis_surat` varchar(50) NOT NULL,
+  `tanggal` date DEFAULT curdate(),
+  `keperluan` text DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'Menunggu'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `surat`
+--
+
+INSERT INTO `surat` (`id_surat`, `idwarga`, `jenis_surat`, `tanggal`, `keperluan`, `status`) VALUES
+(1, '1234567890', 'Surat Belum Menikah', '2025-10-04', 'Melamar Pekerjaan', 'Disetujui'),
+(2, '3286026909020007', 'Surat Domisili', '2025-10-04', 'pindah', 'Menunggu');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `admin`
+-- Indeks untuk tabel `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`idadmin`);
+
+--
+-- Indeks untuk tabel `datawarga`
+--
+ALTER TABLE `datawarga`
+  ADD PRIMARY KEY (`idwarga`);
+
+--
+-- Indeks untuk tabel `surat`
+--
+ALTER TABLE `surat`
+  ADD PRIMARY KEY (`id_surat`),
+  ADD KEY `idwarga` (`idwarga`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `surat`
+--
+ALTER TABLE `surat`
+  MODIFY `id_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `surat`
+--
+ALTER TABLE `surat`
+  ADD CONSTRAINT `surat_ibfk_1` FOREIGN KEY (`idwarga`) REFERENCES `datawarga` (`idwarga`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
