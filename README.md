@@ -7,7 +7,7 @@
 
 # Gambar Project
 ![img data](images/login.png)
-![img data](images/beranda.png)
+<img width="1345" height="625" alt="Image" src="https://github.com/user-attachments/assets/c8aac674-f51e-4f65-b71b-411e39f7e946" />
 ![img data](images/form%20data.png)
 ![img data](images/data%20warga.png)
 ![img data](images/edit%20data.png)
