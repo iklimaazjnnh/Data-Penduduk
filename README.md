@@ -13,10 +13,12 @@
 ![img data](images/edit%20data.png)
 ![img data](images/cetak%20daftar.png)
 ![img data](images/cetak%20kartu.png)
-<img width="1127" height="512" alt="Image" src="https://github.com/user-attachments/assets/1e640ac7-40b5-4a4e-982d-5a5250b2c29b" />
 <img width="1326" height="649" alt="Image" src="https://github.com/user-attachments/assets/6106df83-cd47-4958-a2d0-663accd395b1" />
 <img width="1334" height="640" alt="Image" src="https://github.com/user-attachments/assets/22b34c69-1dad-4629-88b9-c16e9e1f9561" />
 <img width="1328" height="618" alt="Image" src="https://github.com/user-attachments/assets/27e9c16c-58ce-449a-ac69-0afe90f0dd3f" />
+<img width="527" height="581" alt="Image" src="https://github.com/user-attachments/assets/e151704e-63ff-48ca-9b49-931ea8d96299" />
+
 
 DATABASE
-<img width="527" height="581" alt="Image" src="https://github.com/user-attachments/assets/e151704e-63ff-48ca-9b49-931ea8d96299" />
+<img width="1127" height="512" alt="Image" src="https://github.com/user-attachments/assets/1e640ac7-40b5-4a4e-982d-5a5250b2c29b" />
+
